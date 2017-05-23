@@ -193,13 +193,13 @@ std::string StatSummarizer::HeaderString(const string& title) const {
   stream << "============================== " << title
          << " ==============================" << std::endl;
 
-  InitField(stream, 24) << "[node type]";
+  InitField(stream, 7) << "[type]";
   InitField(stream, 9) << "[start]";
-  InitField(stream, 9) << "[first]";
+  //InitField(stream, 9) << "[first]";
   InitField(stream, 9) << "[avg ms]";
   InitField(stream, 8) << "[%]";
   InitField(stream, 8) << "[cdf%]";
-  InitField(stream, 10) << "[mem KB]";
+  //InitField(stream, 10) << "[mem KB]";
   stream << "\t"
          << "[Name]";
   return stream.str();
@@ -215,13 +215,13 @@ std::string StatSummarizer::ColumnString(const Detail& detail,
   const double cdf_percentage = (cumulative_stat_on_node * 100.0f) / stat.sum();
 
   std::stringstream stream;
-  InitField(stream, 24) << detail.type;
+  InitField(stream, 7) << detail.type;
   InitField(stream, 9) << start_ms;
-  InitField(stream, 9) << first_time_ms;
+  //InitField(stream, 9) << first_time_ms;
   InitField(stream, 9) << avg_time_ms;
   InitField(stream, 7) << percentage << "%";
   InitField(stream, 7) << cdf_percentage << "%";
-  InitField(stream, 10) << detail.mem_used.newest() / 1000.0;
+  //InitField(stream, 10) << detail.mem_used.newest() / 1000.0;
   stream << "\t" << detail.name;
 
   return stream.str();
@@ -319,12 +319,12 @@ std::string StatSummarizer::GetStatsByNodeType() const {
                     std::pair<string, int64>(node_type.first, mem_used));
   }
 
-  InitField(stream, 24) << "[Node type]";
+  InitField(stream, 10) << "[Type]";
   InitField(stream, 9) << "[count]";
   InitField(stream, 10) << "[avg ms]";
   InitField(stream, 11) << "[avg %]";
   InitField(stream, 11) << "[cdf %]";
-  InitField(stream, 10) << "[mem KB]";
+  //InitField(stream, 10) << "[mem KB]";
   stream << std::endl;
 
   float cdf = 0.0f;
@@ -342,12 +342,12 @@ std::string StatSummarizer::GetStatsByNodeType() const {
         ((entry.first / static_cast<float>(accumulated_us)) * 100.0f);
     cdf += percentage;
 
-    InitField(stream, 24) << node_type;
+    InitField(stream, 10) << node_type;
     InitField(stream, 9) << node_type_map_count[node_type];
     InitField(stream, 10) << time_per_run_ms;
     InitField(stream, 10) << percentage << "%";
     InitField(stream, 10) << cdf << "%";
-    InitField(stream, 10) << memory;
+    //InitField(stream, 10) << memory;
     stream << std::endl;
   }
   stream << std::endl;

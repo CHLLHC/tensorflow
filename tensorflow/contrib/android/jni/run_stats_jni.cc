@@ -73,7 +73,7 @@ JNIEXPORT jstring RUN_STATS_METHOD(summary)(JNIEnv* env, jclass clazz,
   StatSummarizer* s = requireHandle(env, handle);
   if (s == nullptr) return nullptr;
   std::stringstream ret;
-  ret << s->GetStatsByMetric("Top 10 CPU", StatSummarizer::BY_TIME, 10)
+  ret << s->GetStatsByMetric("CPU", StatSummarizer::BY_RUN_ORDER, 30)
       << s->GetStatsByNodeType() << s->ShortSummary();
   return env->NewStringUTF(ret.str().c_str());
 }

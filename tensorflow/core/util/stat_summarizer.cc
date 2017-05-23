@@ -366,15 +366,17 @@ std::string StatSummarizer::GetStatsByMetric(const string& title,
   stream << HeaderString(title) << std::endl;
   int stat_num = 0;
   for (auto detail : details) {
+    if ((detail->name.find("-") != std::string::npos)&&(detail->type != "Const")){
     ++stat_num;
-    if (num_stats > 0 && stat_num > num_stats) {
-      break;
-    }
+        if (num_stats > 0 && stat_num > num_stats) {
+          break;
+        }
 
-    // TODO(andrewharp): Make this keep track of the particular metric for cdf.
-    cumulative_stat_on_node += detail->rel_end_us.sum();
-    stream << ColumnString(*detail, cumulative_stat_on_node, run_total_us_)
-           << std::endl;
+        // TODO(andrewharp): Make this keep track of the particular metric for cdf.
+        cumulative_stat_on_node += detail->rel_end_us.sum();
+        stream << ColumnString(*detail, cumulative_stat_on_node, run_total_us_)
+               << std::endl;
+    }
   }
   stream << std::endl;
   return stream.str();
